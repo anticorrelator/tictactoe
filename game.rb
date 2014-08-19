@@ -7,7 +7,6 @@ class Game
   def initialize
     @player_x = Player.new
     @player_o = Player.new
-
     @available_squares = (1..9).to_a
     @board = {}
     @available_squares.each { |index| @board[index] = index }
@@ -17,7 +16,6 @@ class Game
 
   def play
     vs_computer ? play_with_computer : play_with_human
-
     draw_board
     puts @state
   end
@@ -26,7 +24,6 @@ class Game
     while @state == 'active'
       draw_board
       current_player_turn_alert
-
       input = pick_move_prompt
       @current_player.marks_square(input, @available_squares)
       update_game_state
@@ -35,11 +32,8 @@ class Game
   end
 
   def play_with_computer
-    if go_first?
-      @player_o = ComputerPlayer.new('Player O')
-    else
-      @player_x = @current_player = ComputerPlayer.new('Player X')
-    end
+    go_first ? @player_o = ComputerPlayer.new('Player O') :
+               @player_x = @current_player = ComputerPlayer.new('Player X')
 
     while @state == 'active'
       if @current_player.is_a? ComputerPlayer
@@ -49,7 +43,6 @@ class Game
       else
         draw_board
         puts "It's your turn."
-
         input = pick_move_prompt
         @current_player.marks_square(input, @available_squares)
         update_game_state
@@ -78,15 +71,13 @@ class Game
     input = protected_prompt('Would you like to play against a computer? (y/n)',
                              ['y', 'n'],
                              'Please select a valid answer. Try again')
-
     input == 'y' ? true : false
   end
 
-  def go_first?
+  def go_first
     input = protected_prompt('Would you like to go first? (y/n)',
                              ['y', 'n'],
                              'Please select a valid answer. Try again')
-
     input == 'y' ? true : false
   end
 

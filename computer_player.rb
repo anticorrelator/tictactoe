@@ -49,13 +49,11 @@ class ComputerPlayer < Player
 
   def terminal_score(current_game, turn_depth)
     cpu_is_player_x = (@computer_player_id == 'Player X') ? 1 : -1
+    cpu_is_player_o = (@computer_player_id == 'Player O') ? 1 : -1
     case current_game.state
-    when 'Player X wins!'
-      cpu_is_player_x * (100 - turn_depth)
-    when 'Player O wins!'
-      cpu_is_player_x * (100 - turn_depth) * -1
-    when 'The game is a draw.'
-      0
+    when 'Player X wins!' then cpu_is_player_x * (100 - turn_depth)
+    when 'Player O wins!' then cpu_is_player_o * (100 - turn_depth)
+    when 'The game is a draw.' then 0
     end
   end
 end
